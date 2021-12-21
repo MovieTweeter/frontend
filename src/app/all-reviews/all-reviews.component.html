@@ -1,12 +1,5 @@
-<p>Welcome</p>
-<div class="container">
-  <div class="reviews">
-    <div *ngIf="reviews.length > 0" *ngFor="let review of reviews">
-      <ul>
-        <li>{{ review.title }}</li>
-        <li><img [src]="getImage(review.movieApiId)" alt="" /></li>
-      </ul>
-      <hr />
-    </div>
-  </div>
+<div class="allReview">
+  <app-featured-movie class="featured"></app-featured-movie>
+  <app-review class="reviews"></app-review>
+  <app-movie-search class="search"></app-movie-search>
 </div>

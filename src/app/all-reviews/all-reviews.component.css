@@ -1,9 +1,21 @@
-.container {
+.allReview {
   display: grid;
-  grid-template-columns: auto auto auto;
-  grid-template-areas: ". reviews .";
+  grid-template-columns: auto auto auto 300px;
+  grid-template-areas: "featured reviews reviews search";
 }
 
 .reviews {
   grid-area: reviews;
+  margin: 30px;
+}
+
+.search {
+  grid-area: search;
+  display: inline-block;
+  margin: 10px;
+}
+
+.featured {
+  grid-area: featured;
+  margin: 10px;
 }

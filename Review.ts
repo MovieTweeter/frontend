@@ -8,6 +8,5 @@ export interface Review {
   author: {
     id: Number;
     username: String;
-    password: String;
   };
 }
