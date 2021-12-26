@@ -23,12 +23,12 @@ import { FeaturedMovieComponent } from './featured-movie/featured-movie.componen
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      {
-        path: 'reviews',
-        component: AllReviewsComponent,
-      },
-    ]),
+    // RouterModule.forRoot([
+    //   {
+    //     path: '',
+    //     component: AllReviewsComponent,
+    //   },
+    // ]),
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

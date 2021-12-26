@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Movie } from 'Movie';
 import { Review } from 'Review';
 import { User } from 'User';
@@ -20,6 +20,12 @@ export class AllReviewsComponent implements OnInit {
   movies!: Movie[];
   reviews!: Review[];
 
+  @Input()
+  addedReview!: Review;
+
+  public clickedEvent!: Event;
+  public clickedFilterEvent!: Event;
+
   ngOnInit() {
     // this.authenticationService.checkLoginStatus().subscribe((user) => {
     //   this.loggedInUser = user;
@@ -28,5 +34,13 @@ export class AllReviewsComponent implements OnInit {
     //   this.reviews = review;
     //   console.log(this.reviews);
     // });
+  }
+
+  childEventClicked(event: Event) {
+    this.clickedEvent = event;
+  }
+
+  childFilterEventClicked(event: Event) {
+    this.clickedFilterEvent = event;
   }
 }

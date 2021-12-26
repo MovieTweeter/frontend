@@ -7,30 +7,51 @@
     placeholder="Search for a movie"
   />
 
-  <button (click)="searchMovie()" class="button is-success">Search</button>
+  <button
+    style="margin-left: 10px"
+    (click)="searchMovie()"
+    class="button is-success"
+  >
+    Search
+  </button>
 </div>
 <p *ngIf="displayErrorMessage" class="has-text-danger">No results found</p>
 <div *ngIf="searchResults.Search.length > 1">
   <div *ngFor="let movie of searchResults.Search" class="card">
     <div class="card-content">
-      <div class="block">
-        <p>
-          <strong style="color: white">{{ movie.Title }}</strong>
-        </p>
+      <div class="media">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <img [src]="movie.Poster" />
+          </figure>
+        </div>
+        <div class="media-content">
+          <p>
+            <strong style="color: white"
+              >{{ movie.Title }} ({{ movie.Year }})</strong
+            >
+          </p>
+          <p style="color: white">ImdbID: {{ movie.imdbID }}</p>
+        </div>
       </div>
+      <br />
 
-      <div *ngIf="movie.Poster" class="card-image">
-        <figure class="image is-3by4">
-          <img [src]="movie.Poster" />
-        </figure>
-      </div>
+      <footer class="card-footer">
+        <div class="card-footer-item">
+          <a style="color: white" (click)="selectMovie(movie.imdbID)"
+            >View Details</a
+          >
+        </div>
+        <div class="card-footer-item">
+          <a style="color: white" (click)="filterMovie(movie.imdbID)"
+            >See Reviews</a
+          >
+        </div>
+      </footer>
     </div>
-    <footer class="card-footer">
-      <a href="#" class="card-footer-item">Save</a>
-    </footer>
   </div>
-</div>
-<!-- <select
+
+  <!-- <select
   [(ngModel)]="selectedMovie"
   (ngModelChange)="selectMovie(selectedMovie)"
 >
@@ -39,7 +60,7 @@
   </option>
 </select> -->
 
-<!-- <div *ngIf="dropdownActive" class="dropdown is-active">
+  <!-- <div *ngIf="dropdownActive" class="dropdown is-active">
     <div class="dropdown-trigger">
       <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
         <span>Select Movie</span>
@@ -59,7 +80,7 @@
     </div>
   </div>
 </div> -->
-<!-- <ul>
+  <!-- <ul>
   <li
     *ngFor="let movie of searchResults.Search"
     (click)="selectMovie(movie.imdbID)"
@@ -67,3 +88,4 @@
     {{ movie.Title }}
   </li>
 </ul> -->
+</div>

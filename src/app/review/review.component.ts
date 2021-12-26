@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Review } from 'Review';
 import { ReviewService } from '../review.service';
 
@@ -16,11 +16,63 @@ export class ReviewComponent implements OnInit {
 
   reviews!: Review[];
 
+  @Input()
+  reviewToAdd!: Review;
+
+  @Input()
+  filterEvent!: Event;
+
+  noReviewsFound: Boolean = false;
+  showingAllReviews: Boolean = true;
+
+  getAllReviews() {
+    this.reviewService.getAllReviews().subscribe((reviews) => {
+      this.reviews = reviews;
+      this.showingAllReviews = true;
+      this.noReviewsFound = false;
+    });
+  }
+
   ngOnInit() {
     this.reviewService.getAllReviews().subscribe((review) => {
       this.reviews = review;
-      console.log(this.reviews);
     });
+  }
+  ngOnChanges() {
+    if (this.reviewToAdd === undefined || this.reviewToAdd.id === 0) {
+      if (<String>(<unknown>this.filterEvent))
+        this.reviewService
+          .getAllReviewsByMovieId(this.filterEvent)
+          .subscribe((data) => {
+            if (data.length === 0) {
+              this.noReviewsFound = true;
+              this.reviews = data;
+              this.showingAllReviews = false;
+            } else {
+              this.noReviewsFound = false;
+              this.showingAllReviews = false;
+              this.reviews = data;
+            }
+          });
+    } else {
+      this.reviewService.getAllReviews().subscribe((reviews) => {
+        this.reviews = reviews;
+        this.noReviewsFound = false;
+        this.showingAllReviews = true;
+        this.reviewToAdd = {
+          id: 0,
+          title: '',
+          reviewText: '',
+          author: {
+            id: 0,
+            username: '',
+          },
+          submissionTime: new Date(),
+          movieApiId: '',
+          rating: 0,
+        };
+      });
+    }
   }
 
   convertDate(date: Date) {

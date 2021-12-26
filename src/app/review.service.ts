@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Movie } from 'Movie';
 import { Review } from 'Review';
 import { Observable } from 'rxjs';
 
@@ -14,9 +13,9 @@ export class ReviewService {
     return this.http.get<Review[]>('http://localhost:8080/reviews');
   }
 
-  getMovieInfo(id: String): Observable<Movie> {
-    return this.http.get<Movie>(
-      `http://www.omdbapi.com/?i=${id}&apikey=50275210`
+  getAllReviewsByMovieId(id: any): Observable<Review[]> {
+    return this.http.get<Review[]>(
+      `http://localhost:8080/movies/${id}/reviews`
     );
   }
 
@@ -27,6 +26,33 @@ export class ReviewService {
         observe: 'response',
       }
     );
+  }
+
+  createReview(
+    title: String,
+    reviewText: String,
+    reviewRating: String,
+    reviewMovieId: String
+  ) {
+    return this.http.post(
+      `http://localhost:8080/reviews`,
+      {
+        title: title,
+        rating: reviewRating,
+        reviewText: reviewText,
+        apiId: reviewMovieId,
+      },
+      {
+        observe: 'response',
+        withCredentials: true,
+      }
+    );
+  }
+
+  getMovieById(id: string) {
+    return this.http.get(`http://www.omdbapi.com/?i=${id}&apikey=50275210`, {
+      observe: 'response',
+    });
   }
 
   // searchMovie(title: String): Observable<

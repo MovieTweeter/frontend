@@ -33,4 +33,15 @@ export class AuthenticationService {
       { withCredentials: true }
     );
   }
+
+  signup(username: String, password: String): Observable<User> {
+    return this.http.post<User>(
+      'http://localhost:8080/signup',
+      {
+        username: username,
+        password: password,
+      },
+      { withCredentials: true }
+    );
+  }
 }

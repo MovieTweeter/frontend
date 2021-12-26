@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ReviewService } from '../review.service';
 
 @Component({
@@ -19,6 +19,9 @@ export class MovieSearchComponent implements OnInit {
 
   displayErrorMessage = false;
 
+  @Output() selectMovieEvent = new EventEmitter<Event>();
+  @Output() filterMovieEvent = new EventEmitter<Event>();
+
   ngOnInit(): void {}
 
   // searchMovie() {
@@ -31,7 +34,6 @@ export class MovieSearchComponent implements OnInit {
 
   searchMovie() {
     this.reviewService.searchMovie(this.movieSearch).subscribe((res) => {
-      console.log(res.body);
       if (!res.body?.hasOwnProperty('Search')) {
         this.displayErrorMessage = true;
       } else {
@@ -41,7 +43,11 @@ export class MovieSearchComponent implements OnInit {
     });
   }
 
-  selectMovie(id: String) {
-    console.log(id);
+  selectMovie(event: Event) {
+    this.selectMovieEvent.emit(event);
+  }
+
+  filterMovie(event: Event) {
+    this.filterMovieEvent.emit(event);
   }
 }
