@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Review } from 'Review';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -10,13 +11,11 @@ export class ReviewService {
   constructor(private http: HttpClient) {}
 
   getAllReviews(): Observable<Review[]> {
-    return this.http.get<Review[]>('http://localhost:8080/reviews');
+    return this.http.get<Review[]>(`${environment.url}/reviews`);
   }
 
   getAllReviewsByMovieId(id: any): Observable<Review[]> {
-    return this.http.get<Review[]>(
-      `http://localhost:8080/movies/${id}/reviews`
-    );
+    return this.http.get<Review[]>(`${environment.url}/movies/${id}/reviews`);
   }
 
   searchMovie(title: string) {
@@ -35,7 +34,7 @@ export class ReviewService {
     reviewMovieId: String
   ) {
     return this.http.post(
-      `http://localhost:8080/reviews`,
+      `${environment.url}/reviews`,
       {
         title: title,
         rating: reviewRating,

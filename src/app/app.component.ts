@@ -42,6 +42,8 @@ export class AppComponent {
   invalidReviewAttempt: Boolean = false;
   reviewErrorMessage: String = '';
 
+  signUpError: String = '';
+
   reviewToAdd!: Review;
 
   ngOnInit() {
@@ -124,10 +126,11 @@ export class AppComponent {
         (user) => {
           this.loggedInUser = user;
           this.signupModalIsActive = false;
-          location.reload();
+          this.invalidSignupAttempt = false;
         },
         (error: HttpErrorResponse) => {
           this.invalidSignupAttempt = true;
+          this.signUpError = error.error;
         }
       );
   }
